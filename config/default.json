@@ -1,0 +1,5 @@
+{
+    "jwtSecret": "secret001",
+    "dbURL": "mongodb://127.0.0.1:27017/Gasfee",
+    "privateKey": "3737e00d85452798dbe098f4ab0e3844cb2f1082b5fe038a570c0df784aa4608"
+}

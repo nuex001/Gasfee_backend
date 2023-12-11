@@ -2,14 +2,14 @@ const express = require("express");
 const { urlencoded } = require("express");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
-const config = require("config");
+require('dotenv').config();
 const bcrypt = require("bcrypt");
 
 // SCHEMA
 const { User } = require("../models/Schema");
 // For Creating token
 const createToken = (payload) => {
-    return jwt.sign(payload, config.get("jwtSecret"));
+    return jwt.sign(payload, process.env.jwtSecret);
 };
 
 router.get("/:username", async (req, res) => {

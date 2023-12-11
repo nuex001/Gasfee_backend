@@ -2,7 +2,7 @@ const express = require("express");
 const { urlencoded } = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
-const config = require("config");
+require('dotenv').config();
 const axios = require('axios');
 const { io } = require("../server"); // Make sure the path is correct
 const ethers = require('ethers');
@@ -12,7 +12,7 @@ const { CONTRACT_ADDRESS, MATIC_CONTRACT_ADDRESS, ABI } = require("../utils/util
 const auth = require("../middleware/auth");
 // For Creating token
 
-let wallet = new ethers.Wallet(config.get("privateKey"));
+let wallet = new ethers.Wallet(process.env.privateKey);
 
 // Connect to Ethereum
 let providerEth = ethers.getDefaultProvider('https://ethereum-sepolia.publicnode.com');
@@ -367,7 +367,7 @@ io.on('connection', (socket) => {
       return socket.emit('authenticationError', { msg: 'No token, Invalid credentials' });
     }
     try {
-      const decoded = await jwt.verify(token, config.get('jwtSecret'));
+      const decoded = await jwt.verify(token, process.env.jwtSecret);
       const user = decoded.user;
       const chainId = chain;
       const mainUser = await User.findOne({ _id: user.id });
@@ -440,7 +440,7 @@ io.on('connection', (socket) => {
     }
     try {
       // Opt out and remove user and their transaction
-      const decoded = await jwt.verify(token, config.get('jwtSecret'));
+      const decoded = await jwt.verify(token, process.env.jwtSecret);
       const user = decoded.user;
       const chainId = chain;
 
